@@ -33,7 +33,15 @@ module.exports = {
     {
       resolve: '@narative/gatsby-theme-novela',
       options: {
-        authorsPage: true
+        authorsPage: true,
+        mailchimp: true
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-mailchimp',
+      options: {
+        endpoint:
+          'https://dev.us4.list-manage.com/subscribe/post?u=c585d707ffc4886d6e72faa29&amp;id=840a133461' // add your MC list endpoint here; see plugin repo for instructions
       }
     },
     {
