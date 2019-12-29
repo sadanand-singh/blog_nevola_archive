@@ -22,6 +22,8 @@ import mediaqueries from '@styles/media';
 import { toKebabCase } from '@utils';
 
 import CodeStats from '../CodeStats/CodeStats';
+import TLDR from '../TLDR';
+import UPDATE from '../Update';
 
 const components = {
   img: ImageZoom,
@@ -44,7 +46,9 @@ const components = {
   th: Tables.HeadCell,
   td: Tables.Cell,
   figcaption: Figcaption,
-  CodeStats: CodeStats
+  CodeStats: CodeStats,
+  tldr: TLDR,
+  update: UPDATE
 };
 
 interface MDXProps {
