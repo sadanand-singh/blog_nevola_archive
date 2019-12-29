@@ -7,6 +7,7 @@
     - url: https://facebook.com/sadanand4singh
     - url: https://twitter.com/saddy4s
     - url: https://github.com/sadanand-singh
+    - url: https://www.linkedin.com/in/sadanandsingh/
 
 - name: Abha Mundepi
   bio: |
@@ -14,6 +15,6 @@
   avatar: ./avatars/abha.jpeg
   featured: false
   social:
-    - url: https://unsplash.com
     - url: https://twitter.com/abhamundepi
     - url: https://github.com/abhamundepi
+    - url: https://www.linkedin.com/in/abha-mundepi-05943052/

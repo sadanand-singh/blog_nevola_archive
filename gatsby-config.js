@@ -22,6 +22,10 @@ module.exports = {
       {
         name: `facebook`,
         url: `https://facebook.com/sadanand4singh/`
+      },
+      {
+        name: `linkedin`,
+        url: `https://www.linkedin.com/in/sadanandsingh/`
       }
     ]
   },
