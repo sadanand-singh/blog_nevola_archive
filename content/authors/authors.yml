@@ -1,0 +1,9 @@
+- name: Sadanand Singh
+  bio: |
+    AI Researcher in health care. This space if for discussions, tutorials, and commentary on deep learning, machine learning, programming, computers and science. Follow me on twitter for more!
+  avatar: ./avatars/sadanand.jpg
+  featured: true
+  social:
+    - url: https://unsplash.com
+    - url: https://twitter.com/saddy4s
+    - url: https://github.com/sadanand-singh
