@@ -4,6 +4,16 @@
   avatar: ./avatars/sadanand.jpg
   featured: true
   social:
-    - url: https://unsplash.com
+    - url: https://facebook.com/sadanand4singh
     - url: https://twitter.com/saddy4s
     - url: https://github.com/sadanand-singh
+
+- name: Abha Mundepi
+  bio: |
+    Life Sciences researcher with expertise in agritech, soil sciences and biotechnology. Interested in data sciences, food, recipe, travel and crafts!
+  avatar: ./avatars/abha.jpeg
+  featured: false
+  social:
+    - url: https://unsplash.com
+    - url: https://twitter.com/abhamundepi
+    - url: https://github.com/abhamundepi
