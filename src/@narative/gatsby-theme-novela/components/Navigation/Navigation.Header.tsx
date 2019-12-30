@@ -97,7 +97,7 @@ const NavigationHeader: React.FC<{}> = () => {
       prev === (rootPath || basePath) || (prev && prev.includes('/page/'));
     const isNotPaginated = !location.pathname.includes('/page/');
 
-    setShowBackArrow(previousPathWasHomepage && isNotPaginated && width <= phablet);
+    // setShowBackArrow(previousPathWasHomepage && isNotPaginated && width <= phablet);
     setPreviousPath(prev);
   }, []);
 
