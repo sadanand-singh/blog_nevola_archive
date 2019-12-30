@@ -1,0 +1,247 @@
+---
+title: 'Using Gatsby Themes'
+date: 2019-12-29
+author: Sadanand Singh
+slug: using-gatsby-theme
+hero: ./themes.jpeg
+---
+
+2019 has been a year of gatsby updates for this site. So, I wanted to end this year with the same
+spirit. After playing hours and hours with different features of gatsby, one feature that I have
+really fallen for is - [gatsby themes](https://www.gatsbyjs.org/docs/themes/).
+
+I have been using a heavily modified version of the theme developed by
+[Tania Rascia](https://www.taniarascia.com/). It was good starting point and helped me learn a lot
+about gatsby, react, javascript and css. However, adding any features have been little challenging.
+I had to dig through different style files to change any component's css for its behavior in the
+both the regular and dark modes. Nevertheless, I have added several components, including, Scroll
+to Top Button on posts, TLDR and Update components for mdx, and ZoomImage and ImageGallery
+components for mdx.
+
+While developing these components and features, I have also been actively following gatsby
+development. Specially for any new features that could make the UI development and maintainance
+much easier. And this led me to gatsby themes. In this post, I want to describe the gatsby theme
+I have used to build the new looks.
+
+### Gatsby Themes
+
+Gatsby themes allow Gatsby site functionality to be packaged as a standalone product for others
+(and yourself!) to easily reuse. Using a traditional starter, all of your default configuration
+lives directly in your site. Using a theme, all of your default configuration lives in an npm
+package.
+
+My search for a great starting theme led me to
+[novela](https://github.com/narative/gatsby-theme-novela). Some of the cool features that I liked
+from this theme are:
+
+- dark mode
+- different layouts for articles list with pagination
+- medium-like image zoom and highlight text to share
+- reading progress sidebar
+- mailchimp newsletter subscription support
+- multiple authors with profiles
+
+Here is a gif to showcase some of these features:
+
+![](https://raw.githubusercontent.com/narative/gatsby-theme-novela-example/master/assets/gatsby-theme-novela-accessibility.gif)
+
+However, the thing that attracted me the most to this theme was its friendliness for any type of
+modifications. Its a very active project on github and well documented. Almost every component,
+section of the theme can be easily modified.
+
+In the following section, I will describe some of the major modifications that I made to the theme.
+
+### Setting up the Novela Theme
+
+First, following the official instructions, I set up things like logo, authors, site metadata,
+mailchimp and authors.
+
+The theme is based on mdx files, however, it lacks support for latext equations etc.
+
+#### adding manifest and google analytics
+
+This is needed to set a favicon properly and setting other manifests. This can be done via the
+`gatsby-plugin-manifest` package. The exact settings in the `gatsby-config.js` can be found below.
+
+Similarly, google analytics can be added via the `gatsby-plugin-google-analytics` package as shown
+in the `gatsby-config.js` file below.
+
+#### Math Support
+
+First install katext and the corresponding gatsby package and then add plugins to the gatsby config.
+
+```bash
+yarn add katex gatsby-remark-katex
+```
+
+Then, update the `gatsby-config.js` as follows:
+
+```js
+module.exports = {
+  siteMetadata: {
+    title: `site title`,
+    name: `site`,
+    siteUrl: `localhost`,
+    description: `your description`,
+
+    // important to set the main text that appears in the hero
+    hero: {
+      heading: `Notes on AI, Health Care and Computers!`,
+      maxWidth: 1052
+    },
+    social: [
+      {
+        name: `twitter`,
+        url: `https://twitter.com/xxx`
+      },
+      {
+        name: `github`,
+        url: `https://github.com/yyy`
+      },
+      {
+        name: `facebook`,
+        url: `https://facebook.com/zzz/`
+      },
+      {
+        name: `linkedin`,
+        url: `https://www.linkedin.com/in/rrr/`
+      }
+    ]
+  },
+  plugins: [
+    {
+      resolve: '@narative/gatsby-theme-novela',
+      options: {
+        authorsPage: true,
+        mailchimp: true
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-mailchimp',
+      options: {
+        endpoint: 'xx'
+      }
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `reckoning.dev by Sadanand`,
+        short_name: `Sadanand`,
+        start_url: `/`,
+        background_color: `#fff`,
+        theme_color: `#fff`,
+        display: `standalone`,
+        icon: `src/assets/favicon.png`
+      }
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-54080172-1'
+      }
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 10000,
+              linkImagesToOriginal: false,
+              quality: 80,
+              withWebp: true
+            }
+          },
+          `gatsby-remark-responsive-iframe`,
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              strict: `ignore`,
+              delimiters: [
+                {
+                  left: '\\\\begin{equation*}',
+                  right: '\\\\end{equation*}',
+                  display: true
+                },
+                { left: '$$', right: '$$', display: true },
+                { left: '\\[', right: '\\]', display: true },
+                { left: '$', right: '$', display: false },
+                { left: '\\(', right: '\\)', display: false }
+              ]
+            }
+          },
+          { resolve: `gatsby-remark-copy-linked-files` },
+          { resolve: `gatsby-remark-numbered-footnotes` },
+          { resolve: `gatsby-remark-smartypants` },
+          {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_blank',
+              rel: 'noreferrer'
+            }
+          }
+        ],
+        remarkPlugins: [require(`remark-slug`)]
+      }
+    }
+  ]
+};
+```
+
+In addition to updating the plugins used in the `gatsby-config.js`, we also need to add katex css
+file to all posts. This can be done by importing those to `gatsby-browser.js` file.
+
+```js
+import 'katex/dist/katex.min.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
+```
+
+#### Image Gallery Components in mdx
+
+Image gallery component from the [`react-image-gallery`](https://www.npmjs.com/package/react-image-gallery)
+npm package. All we need is to include the corresponding css file correctly. Similar to the math
+support, we can add the corresponding css file to the `gatsby-browser.js` file.
+
+```bash
+yarn add react-image-gallery
+```
+
+#### tldr and update components
+
+For adding messages like updates, tldr, I have also created simple components that can be used
+directly in the mdx file. These components are based on the
+[theme-ui](https://www.gatsbyjs.org/docs/theme-ui/) library. This library enables easy management
+of css components for things like dark mode management, colors, and different screen sizes.
+Then, we also need to modify the MDX component to add these to list of known components.
+
+#### Code stats to navigation header
+
+Converted old implementation of code stats page to a component. The full implementation of the
+code stats can be found in [its implementation at github](https://github.com/sadanand-singh/reckoning.dev/blob/master/src/%40narative/gatsby-theme-novela/components/CodeStats/CodeStats.js).
+
+Note that this implementation uses following npm plugins.
+
+```bash
+yarn add highcharts highcharts-react-official
+```
+
+Now, we can then create a dummy mdx post with `secret: true` enabled in the frontmatter. This
+ensures that this post will not be listed in the main list of articles. Now, we can use the slug
+of this post as a link to the code stats page.
+
+Finally, We need to add the code stats icon to the navigation headers. This is also easily implemented
+via the theme-ui plugin. See the details at [ CodeStatsLink implementation at github](https://github.com/sadanand-singh/reckoning.dev/blob/master/src/%40narative/gatsby-theme-novela/components/CodeStats/CodeStatsLink.tsx).
+
+Finally, we can add the CodeStatsLink to the [navigation header page](https://github.com/sadanand-singh/reckoning.dev/blob/master/src/%40narative/gatsby-theme-novela/components/Navigation/Navigation.Header.tsx).
+
+Checkout the final results at [this page](/code-stats).
+
+So this brings to the final steps of my new setup. I hope this has brought me at the end of my
+search for perfect gatsby setup. Hoping to keep this look and feel constant now for a foreseeable
+future and focus more on other interesting topics here. Watch out for my year end post to look for
+upcoming posts.
+
+Finally, do not forget to subscribe to the newsletter below to keeping up to date with my posts in
+a near year and a new decade.
